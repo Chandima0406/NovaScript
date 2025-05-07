@@ -1,13 +1,38 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import '../styles/LoginPage.css';
 
 const LoginPage = () => {
+  const [formData, setFormData] = useState({
+    email: '',
+    password: '',
+    remember: false
+  });
+  const [error, setError] = useState('');
+  const navigate = useNavigate();
+
+  const handleChange = (e) => {
+    const { name, value, type, checked } = e.target;
+    setFormData({
+      ...formData,
+      [name]: type === 'checkbox' ? checked : value
+    });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setError('');
+
+    // Simulate successful login by navigating to home page
+    navigate('/home');
+  };
+
   return (
     <div className="login-page">
       <main className="login-main">
         <h1 className="login-title">Log In To NovaScript</h1>
-        <form className="login-form">
+        {error && <p className="error-message">{error}</p>}
+        <form className="login-form" onSubmit={handleSubmit}>
           <div className="form-group">
             <input
               type="text"
@@ -15,6 +40,8 @@ const LoginPage = () => {
               name="email"
               placeholder="Email/Username"
               className="form-input"
+              value={formData.email}
+              onChange={handleChange}
               required
             />
           </div>
@@ -25,12 +52,19 @@ const LoginPage = () => {
               name="password"
               placeholder="Password"
               className="form-input"
+              value={formData.password}
+              onChange={handleChange}
               required
             />
           </div>
           <div className="form-options">
             <label className="remember-me">
-              <input type="checkbox" name="remember" />
+              <input
+                type="checkbox"
+                name="remember"
+                checked={formData.remember}
+                onChange={handleChange}
+              />
               Remember Me
             </label>
             <Link to="/forgot-password" className="forgot-password">Forgot Password?</Link>
@@ -45,4 +79,4 @@ const LoginPage = () => {
   );
 };
 
-export default LoginPage;
+export default LoginPage;
