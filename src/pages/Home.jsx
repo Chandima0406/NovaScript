@@ -1,9 +1,10 @@
 import React from 'react';
-import Navbar from '../components/Navbar';
-import Footer from '../components/Footer';
+import { useNavigate } from 'react-router-dom';
 import '../styles/Home.css';
 
 const Home = () => {
+  const navigate = useNavigate();
+
   const features = [
     {
       icon: "chip",
@@ -107,7 +108,6 @@ const Home = () => {
 
   return (
     <div className="home">
-      <Navbar />
       {/* Hero Section */}
       <div className="hero">
         <div className="content">
@@ -123,7 +123,7 @@ const Home = () => {
           
           <h1 className="title">TRACK, ANALYZE & SUCCEED!</h1>
           
-          <button className="cta-button">Get Started Now</button>
+          <button className="cta-button" onClick={() => navigate('/register')}>Get Started Now</button>
           
           <div className="info-panel">
             <div className="info-header">
@@ -151,6 +151,7 @@ const Home = () => {
             </div>
           </div>
         </div>
+        
       </div>
 
       {/* How It Works Section */}
@@ -199,7 +200,7 @@ const Home = () => {
           </div>
           <div className="cta-container">
             <p className="cta-text">Start Managing Your Research Smarter !</p>
-            <button className="cta-button1">Sign Up Today</button>
+            <button className="cta-button1" onClick={() => navigate('/register')}>Sign Up Today</button>
           </div>
         </div>
       </section>
@@ -266,7 +267,6 @@ const Home = () => {
           ))}
         </div>
       </div>
-      <Footer />
     </div>
   );
 };
