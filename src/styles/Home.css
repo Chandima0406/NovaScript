@@ -3,12 +3,11 @@
 
 /* Hero Section */
 .hero {
-  height: 90vh;
+  height: 95vh;
   width: 100%;
   background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('../assets/hero-bg.jpg') center/cover no-repeat;
   border-radius: 30px;
-  width: 90%;
-  top: 90px;
+  width: 100%;
   justify-self: center;
   position: relative;
   overflow: hidden;
@@ -129,7 +128,8 @@
   border-radius: 15px;
   padding: 1rem;
   color: #333;
-  max-width: 320px;
+  max-width: 300px;
+  max-height: 230px;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
 }
 
@@ -187,7 +187,7 @@
 /* How It Works Section */
 .how-it-works {
   max-width: 1200px;
-  margin: 100px auto;
+  margin: 20px auto;
   padding: 0 20px;
   position: relative;
 }
