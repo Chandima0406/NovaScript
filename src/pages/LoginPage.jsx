@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { login } from '../api';
 import '../styles/LoginPage.css';
 
 const LoginPage = () => {
@@ -19,12 +20,20 @@ const LoginPage = () => {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
 
-    // Simulate successful login by navigating to home page
-    navigate('/home');
+    try {
+      const response = await login({ email: formData.email, password: formData.password });
+      localStorage.setItem('token', response.data.token); // Store JWT
+      if (formData.remember) {
+        localStorage.setItem('email', formData.email); // Optional: Store email for "Remember Me"
+      }
+      navigate('/search'); // Redirect to home page
+    } catch (err) {
+      setError(err.response?.data?.message || 'Login failed');
+    }
   };
 
   return (
