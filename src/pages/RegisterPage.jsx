@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { register } from '../api';
 import '../styles/RegisterPage.css';
 
 const RegisterPage = () => {
@@ -18,18 +19,22 @@ const RegisterPage = () => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
 
-    // Validate passwords match
+    // Validate passwords match (client-side)
     if (formData.password !== formData.confirm_password) {
       setError('Passwords do not match');
       return;
     }
 
-    // Simulate successful registration by navigating to login page
-    navigate('/login');
+    try {
+      await register(formData); // Send all form data to backend
+      navigate('/login'); // Redirect to login page
+    } catch (err) {
+      setError(err.response?.data?.message || 'Registration failed');
+    }
   };
 
   return (
