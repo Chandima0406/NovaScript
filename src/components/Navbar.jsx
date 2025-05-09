@@ -10,7 +10,7 @@ const Navbar = () => {
   const [user, setUser] = useState(null); // User state kept for UI purposes
   const location = useLocation();
 
-  const isAuthPage = ['/login', '/register'].includes(location.pathname);
+  const isAuthPage = ['/login', '/register', '/search'].includes(location.pathname);
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
