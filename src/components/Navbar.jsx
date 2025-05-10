@@ -10,7 +10,7 @@ const Navbar = () => {
   const [user, setUser] = useState(null); // User state kept for UI purposes
   const location = useLocation();
 
-  const isAuthPage = ['/login', '/register', '/search'].includes(location.pathname);
+  const isAuthPage = ['/login', '/register', '/search', '/about'].includes(location.pathname);
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
@@ -42,7 +42,7 @@ const Navbar = () => {
             </div>
             <div className={`navbar-links ${isOpen ? 'active' : ''}`}>
               <Link to="/home" className="nav-link">Home</Link>
-              <Link to="/home" className="nav-link">About</Link>
+              <Link to="/about" className="nav-link">About</Link>
               <Link to="/home" className="nav-link">Contact</Link>
               <Link to="/home" className="nav-link">Home</Link>
               {user ? (
