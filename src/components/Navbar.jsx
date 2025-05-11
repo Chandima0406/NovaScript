@@ -43,7 +43,7 @@ const Navbar = () => {
             <div className={`navbar-links ${isOpen ? 'active' : ''}`}>
               <Link to="/home" className="nav-link">Home</Link>
               <Link to="/about" className="nav-link">About</Link>
-              <Link to="/home" className="nav-link">Contact</Link>
+              <Link to="/contact" className="nav-link">Contact</Link>
               <Link to="/home" className="nav-link">Home</Link>
               {user ? (
                 <div className="profile-section">
