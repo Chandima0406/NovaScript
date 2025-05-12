@@ -44,7 +44,7 @@ const Navbar = () => {
               <Link to="/home" className="nav-link">Home</Link>
               <Link to="/about" className="nav-link">About</Link>
               <Link to="/contact" className="nav-link">Contact</Link>
-              <Link to="/home" className="nav-link">Home</Link>
+              <Link to="/home" className="nav-link">Blog</Link>
               {user ? (
                 <div className="profile-section">
                   <img src={profilePic} alt="Profile" className="profile-pic" />
