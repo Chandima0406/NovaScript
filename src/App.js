@@ -23,7 +23,7 @@ function App() {
             <Route path="/register" element={<RegisterPage />} />
             <Route path="/search" element={<SearchEngine />} />
             <Route path="/about" element={<AboutUs />} />
-            <Route path="/contact" element={<ContactUs />} /> 
+            <Route path="/contact" element={<ContactUs />} />
             <Route path="/forgot-password" element={<div>Forgot Password Page (Placeholder)</div>} />
           </Routes>
           <Footer />
