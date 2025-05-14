@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const API = axios.create({
-  baseURL: 'http://localhost:5000/api', // Backend URL
+  baseURL: 'http://localhost:5000/api',
 });
 
 // Add token to requests if available
@@ -16,5 +16,7 @@ API.interceptors.request.use((config) => {
 // API functions
 export const register = (data) => API.post('/register', data);
 export const login = (data) => API.post('/login', data);
+export const publishProject = (data) => API.post('/projects', data);
+export const getProjects = () => API.get('/projects');
 
 export default API;
