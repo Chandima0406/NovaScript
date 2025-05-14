@@ -151,6 +151,11 @@
     font-weight: 600;
     color: #2680eb;
     margin: 0 0 10px 0;
+    text-decoration: none;
+  }
+
+  .project-title:hover {
+  text-decoration: underline;
   }
   
   .project-description {

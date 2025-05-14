@@ -1,57 +1,37 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { getProjects } from '../api';
 import '../styles/SearchEngine.css';
 
 const SearchEngine = () => {
   const [searchQuery, setSearchQuery] = useState('');
+  const [projects, setProjects] = useState([]);
+  const [filteredProjects, setFilteredProjects] = useState([]);
+  const navigate = useNavigate();
 
-  // Sample research projects data
-  const researchProjects = [
-    {
-      id: 1,
-      author: {
-        name: 'Chandima Wijerathna',
-        role: 'Student sabaragamuwa university of sri lanka',
-        avatar: '/path/to/avatar.jpg'
-      },
-      title: 'The Impact of Artificial Intelligence on Academic Research Efficiency',
-      description: 'This research investigates how artificial intelligence enhances the efficiency of academic research processes. It focuses on AI-driven tools used in proposal writing, data analysis, and literature review automation. The study aims to evaluate improvements in research speed, accuracy, and collaboration through AI integration. By comparing traditional research workflows with AI-assisted methods, the project highlights the transformative role of technology in modern research environments.'
-    },
-    {
-      id: 2,
-      author: {
-        name: 'Chandima Wijerathna',
-        role: 'Student sabaragamuwa university of sri lanka',
-        avatar: '/path/to/avatar.jpg'
-      },
-      title: 'The Impact of Artificial Intelligence on Academic Research Efficiency',
-      description: 'This research investigates how artificial intelligence enhances the efficiency of academic research processes. It focuses on AI-driven tools used in proposal writing, data analysis, and literature review automation. The study aims to evaluate improvements in research speed, accuracy, and collaboration through AI integration. By comparing traditional research workflows with AI-assisted methods, the project highlights the transformative role of technology in modern research environments.'
-    },
-    {
-      id: 3,
-      author: {
-        name: 'Chandima Wijerathna',
-        role: 'Student sabaragamuwa university of sri lanka',
-        avatar: '/path/to/avatar.jpg'
-      },
-      title: 'The Impact of Artificial Intelligence on Academic Research Efficiency',
-      description: 'This research investigates how artificial intelligence enhances the efficiency of academic research processes. It focuses on AI-driven tools used in proposal writing, data analysis, and literature review automation. The study aims to evaluate improvements in research speed, accuracy, and collaboration through AI integration. By comparing traditional research workflows with AI-assisted methods, the project highlights the transformative role of technology in modern research environments.'
-    },
-    {
-      id: 4,
-      author: {
-        name: 'Chandima Wijerathna',
-        role: 'Student sabaragamuwa university of sri lanka',
-        avatar: '/path/to/avatar.jpg'
-      },
-      title: 'The Impact of Artificial Intelligence on Academic Research Efficiency',
-      description: 'This research investigates how artificial intelligence enhances the efficiency of academic research processes. It focuses on AI-driven tools used in proposal writing, data analysis, and literature review automation. The study aims to evaluate improvements in research speed, accuracy, and collaboration through AI integration. By comparing traditional research workflows with AI-assisted methods, the project highlights the transformative role of technology in modern research environments.'
-    }
-  ];
+  useEffect(() => {
+    const fetchProjects = async () => {
+      try {
+        const response = await getProjects();
+        setProjects(response.data);
+        setFilteredProjects(response.data);
+      } catch (error) {
+        console.error('Error fetching projects:', error);
+      }
+    };
+    fetchProjects();
+  }, []);
 
   const handleSearch = (e) => {
     e.preventDefault();
-    // Handle search functionality here
-    console.log('Searching for:', searchQuery);
+    const query = searchQuery.toLowerCase();
+    const filtered = projects.filter(
+      (project) =>
+        project.title.toLowerCase().includes(query) ||
+        project.description.toLowerCase().includes(query) ||
+        project.author.name.toLowerCase().includes(query)
+    );
+    setFilteredProjects(filtered);
   };
 
   return (
@@ -59,7 +39,9 @@ const SearchEngine = () => {
       {/* Action Buttons */}
       <div className="action-buttons">
         <button className="action-button">AI Assistance</button>
-        <button className="action-button">Publish Research</button>
+        <button className="action-button" onClick={() => navigate('/publish')}>
+          Publish Research
+        </button>
         <button className="action-button">Create Survey</button>
         <button className="action-button">Support Survey</button>
       </div>
@@ -68,7 +50,7 @@ const SearchEngine = () => {
       <div className="main-heading">
         <h1>Explore Research Projects</h1>
         <p>
-          Discover innovative research projects crafted by top academics and institutions. 
+          Discover innovative research projects crafted by top academics and institutions.
           Gain insights, collaborate with experts, and stay at the forefront of knowledge and discovery.
         </p>
       </div>
@@ -89,11 +71,11 @@ const SearchEngine = () => {
 
       {/* Research Projects List */}
       <div className="research-projects-list">
-        {researchProjects.map((project) => (
-          <div className="research-project-card" key={project.id}>
+        {filteredProjects.map((project) => (
+          <div className="research-project-card" key={project._id}>
             <div className="project-header">
               <div className="author-avatar">
-                <img src={project.author.avatar} alt="Author" />
+                <img src="/path/to/avatar.jpg" alt="Author" />
               </div>
               <div className="author-info">
                 <h3>{project.author.name}</h3>
@@ -101,7 +83,14 @@ const SearchEngine = () => {
               </div>
             </div>
             <div className="project-content">
-              <h2 className="project-title">{project.title}</h2>
+              <a
+                href={`http://localhost:5000/api/projects/pdf/${project.pdfId}`}
+                className="project-title"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                {project.title}
+              </a>
               <p className="project-description">{project.description}</p>
             </div>
           </div>
