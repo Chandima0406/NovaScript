@@ -11,6 +11,7 @@ const PublishResearch = () => {
   });
   const [pdfFile, setPdfFile] = useState(null);
   const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -23,6 +24,8 @@ const PublishResearch = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (loading) return;
+    setLoading(true);
     setError('');
 
     const data = new FormData();
@@ -38,6 +41,8 @@ const PublishResearch = () => {
       navigate('/search');
     } catch (err) {
       setError(err.response?.data?.message || 'Failed to publish project');
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -48,46 +53,60 @@ const PublishResearch = () => {
         {error && <p className="error-message">{error}</p>}
         <form className="publish-form" onSubmit={handleSubmit}>
           <div className="form-group">
+            <label>Project Title</label>
             <input
               type="text"
               name="title"
-              placeholder="Project Title"
+              placeholder="Enter Your Project Title"
               className="form-input"
               value={formData.title}
               onChange={handleChange}
               required
+              disabled={loading}
             />
           </div>
           <div className="form-group">
+            <label>Project Description</label>
             <textarea
               name="description"
-              placeholder="Project Description"
-              className="form-input"
+              placeholder="Write Your Project Description Here..."
+              className="form-input textarea"
               value={formData.description}
               onChange={handleChange}
               required
+              disabled={loading}
             ></textarea>
           </div>
           <div className="form-group">
+            <label>Your Current Position</label>
             <input
               type="text"
               name="role"
-              placeholder="Your Role (e.g., Lead Researcher)"
+              placeholder="Enter Your Current Position (e.g., University student)"
               className="form-input"
               value={formData.role}
               onChange={handleChange}
               required
+              disabled={loading}
             />
           </div>
           <div className="form-group">
+            <label>Upload PDF</label>
             <input
               type="file"
               accept="application/pdf"
               onChange={handleFileChange}
               required
+              disabled={loading}
             />
           </div>
-          <button type="submit" className="publish-button">Publish Project</button>
+          <button
+            type="submit"
+            className="publish-button"
+            disabled={loading}
+          >
+            {loading ? 'Publishing...' : 'Submit Request'}
+          </button>
         </form>
       </main>
     </div>
