@@ -38,7 +38,7 @@ const SearchEngine = () => {
     <div className="search-engine-container">
       {/* Action Buttons */}
       <div className="action-buttons">
-        <button className="action-button">AI Assistance</button>
+        <button className="action-button" onClick={() => navigate('/ai-assistant')}>AI Assistance</button>
         <button className="action-button" onClick={() => navigate('/publish')}>
           Publish Research
         </button>
