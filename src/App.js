@@ -8,6 +8,7 @@ import SearchEngine from './pages/SearchEngine';
 import PublishResearch from './pages/PublishResearch';
 import AboutUs from './pages/AboutUs';
 import ContactUs from './pages/ContactUs';
+import AIAssistant from './pages/AIAssistant';
 import Footer from './components/Footer';
 import './App.css';
 
@@ -26,6 +27,7 @@ function App() {
             <Route path="/publish" element={<PublishResearch />} />
             <Route path="/about" element={<AboutUs />} />
             <Route path="/contact" element={<ContactUs />} />
+            <Route path="/ai-assistant" element={<AIAssistant />} />
             <Route path="/forgot-password" element={<div>Forgot Password Page (Placeholder)</div>} />
           </Routes>
           <Footer />
