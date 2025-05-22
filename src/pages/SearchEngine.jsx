@@ -42,8 +42,8 @@ const SearchEngine = () => {
         <button className="action-button" onClick={() => navigate('/publish')}>
           Publish Research
         </button>
-        <button className="action-button">Create Survey</button>
-        <button className="action-button">Support Survey</button>
+        <button className="action-button" onClick={() => navigate('/create-survey')}>Create Survey</button>
+        <button className="action-button" onClick={() => navigate('/support-survey')}>Support Survey</button>
       </div>
 
       {/* Main Heading */}

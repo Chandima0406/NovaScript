@@ -1,3 +1,4 @@
+// G:\NovaScript\client\src\pages\CreateSurvey.jsx
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { createSurvey, updateSurvey, getSurveyById } from '../api';
@@ -8,7 +9,7 @@ const CreateSurvey = () => {
   const [survey, setSurvey] = useState({
     title: '',
     description: '',
-    role: '',
+    creator: { name: '', role: '' }, // Changed from role to creator
     questions: [{ text: '', type: 'text', options: [] }],
   });
   const [error, setError] = useState('');
@@ -28,7 +29,7 @@ const CreateSurvey = () => {
         setSurvey({
           title: surveyData.title,
           description: surveyData.description,
-          role: surveyData.creator.role,
+          creator: surveyData.creator, // Changed from role to creator
           questions: surveyData.questions,
         });
       } catch (err) {
@@ -43,7 +44,12 @@ const CreateSurvey = () => {
   }, [surveyId, navigate]);
 
   const handleSurveyChange = (e) => {
-    setSurvey({ ...survey, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+    if (name === 'creatorRole') {
+      setSurvey({ ...survey, creator: { ...survey.creator, role: value } });
+    } else {
+      setSurvey({ ...survey, [name]: value });
+    }
   };
 
   const handleQuestionChange = (index, e) => {
@@ -181,14 +187,14 @@ const CreateSurvey = () => {
             />
           </div>
           <div className="form-group">
-            <label htmlFor="role">Your Current Position</label>
+            <label htmlFor="creatorRole">Your Current Position</label>
             <input
               type="text"
-              id="role"
-              name="role"
+              id="creatorRole"
+              name="creatorRole"
               placeholder="Enter Your Current Position (e.g., University Student)"
               className="form-input"
-              value={survey.role}
+              value={survey.creator.role}
               onChange={handleSurveyChange}
               required
               disabled={loading}
