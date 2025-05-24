@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { getSurveyById, submitSurveyResponse } from '../api';
 import '../styles/AnswerSurvey.css';
 
@@ -9,100 +9,132 @@ const AnswerSurvey = () => {
   const [responses, setResponses] = useState({});
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(true);
-  const [submitLoading, setSubmitLoading] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
     const fetchSurvey = async () => {
       try {
-        setLoading(true);
         const response = await getSurveyById(surveyId);
         setSurvey(response.data);
+        setLoading(false);
       } catch (err) {
-        setError('Failed to fetch survey');
-      } finally {
+        console.error('Error fetching survey:', err);
+        if (err.response?.status === 401) {
+          localStorage.removeItem('token');
+          navigate('/login');
+        } else {
+          setError(err.response?.data?.message || 'Failed to fetch survey');
+        }
         setLoading(false);
       }
     };
     fetchSurvey();
-  }, [surveyId]);
+  }, [surveyId, navigate]);
 
-  const handleResponseChange = (questionIndex, value) => {
-    setResponses({ ...responses, [questionIndex]: value });
+  const handleResponseChange = (qIndex, value) => {
+    setResponses((prev) => ({ ...prev, [qIndex]: value }));
   };
 
-  const handleCheckboxChange = (questionIndex, option, isChecked) => {
-    const currentResponses = responses[questionIndex] || [];
-    let updatedResponses;
-    if (isChecked) {
-      updatedResponses = [...currentResponses, option];
-    } else {
-      updatedResponses = currentResponses.filter((item) => item !== option);
-    }
-    setResponses({ ...responses, [questionIndex]: updatedResponses });
+  const handleCheckboxChange = (qIndex, option) => {
+    setResponses((prev) => {
+      const current = prev[qIndex] || [];
+      if (current.includes(option)) {
+        return { ...prev, [qIndex]: current.filter((opt) => opt !== option) };
+      }
+      return { ...prev, [qIndex]: [...current, option] };
+    });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (submitLoading) return;
-    setSubmitLoading(true);
+    if (submitting) return;
+    setSubmitting(true);
     setError('');
 
     try {
-      await submitSurveyResponse(surveyId, responses);
-      navigate('/support-survey');
+      await submitSurveyResponse(surveyId, { responses });
+      navigate('/support-survey', { state: { message: 'Response submitted successfully!' } });
     } catch (err) {
-      setError(err.response?.data?.message || 'Failed to submit responses');
+      console.error('Error submitting response:', err);
+      if (err.response?.status === 401) {
+        localStorage.removeItem('token');
+        navigate('/login');
+      } else {
+        setError(err.response?.data?.message || 'Failed to submit response');
+      }
     } finally {
-      setSubmitLoading(false);
+      setSubmitting(false);
     }
   };
 
-  if (loading) return <div className="answer-survey-container"><p>Loading survey...</p></div>;
-  if (error) return <div className="answer-survey-container"><p className="error-message">{error}</p></div>;
-  if (!survey) return <div className="answer-survey-container"><p>Survey not found</p></div>;
+  if (loading) {
+    return (
+      <div className="answer-survey-page">
+        <main className="answer-survey-main">
+          <p>Loading survey...</p>
+        </main>
+      </div>
+    );
+  }
+
+  if (!survey) {
+    return (
+      <div className="answer-survey-page">
+        <main className="answer-survey-main">
+          <p>{error || 'Survey not found'}</p>
+        </main>
+      </div>
+    );
+  }
 
   return (
     <div className="answer-survey-container">
-      <div className="survey-response-form">
-        <h2>{survey.title}</h2>
-        <p>{survey.description}</p>
+      <main className="answer-survey-main">
+        <h1 className="answer-survey-title">{survey.title}</h1>
+        <p className="answer-survey-description">{survey.description}</p>
         {error && <p className="error-message">{error}</p>}
-        <form onSubmit={handleSubmit}>
-          {survey.questions.map((question, index) => (
-            <div className="form-group" key={index}>
-              <label>{question.text}</label>
-              {question.type === 'text' ? (
-                <input
-                  type="text"
-                  className="form-input"
-                  value={responses[index] || ''}
-                  onChange={(e) => handleResponseChange(index, e.target.value)}
+        <form className="answer-survey-form" onSubmit={handleSubmit}>
+          {survey.questions.map((question, qIndex) => (
+            <div className="question-group" key={qIndex}>
+              <label className="question-label">{`${qIndex + 1}. ${question.text}`}</label>
+              {question.type === 'text' && (
+                <textarea
+                  className="form-input textarea"
+                  value={responses[qIndex] || ''}
+                  onChange={(e) => handleResponseChange(qIndex, e.target.value)}
                   required
-                  disabled={submitLoading}
+                  disabled={submitting}
                 />
-              ) : question.type === 'multiple-choice' ? (
-                <select
-telefonnummer                  className="form-input"
-                  value={responses[index] || ''}
-                  onChange={(e) => handleResponseChange(index, e.target.value)}
-                  required
-                  disabled={submitLoading}
-                >
-                  <option value="">Select an option</option>
-                  {question.options.map((option, i) => (
-                    <option key={i} value={option}>{option}</option>
+              )}
+              {question.type === 'multiple-choice' && (
+                <div className="options-group">
+                  {question.options.map((option, oIndex) => (
+                    <label key={oIndex} className="option-label">
+                      <input
+                        type="radio"
+                        name={`question-${qIndex}`}
+                        value={option}
+                        checked={responses[qIndex] === option}
+                        onChange={(e) => handleResponseChange(qIndex, e.target.value)}
+                        required
+                        disabled={submitting}
+                      />
+                      {option}
+                    </label>
                   ))}
-                </select>
-              ) : (
-                <div className="checkbox-group">
-                  {question.options.map((option, i) => (
-                    <label key={i} className="checkbox-label">
+                </div>
+              )}
+              {question.type === 'checkbox' && (
+                <div className="options-group">
+                  {question.options.map((option, oIndex) => (
+                    <label key={oIndex} className="option-label">
                       <input
                         type="checkbox"
-                        checked={(responses[index] || []).includes(option)}
-                        onChange={(e) => handleCheckboxChange(index, option, e.target.checked)}
-                        disabled={submitLoading}
+                        value={option}
+                        checked={(responses[qIndex] || []).includes(option)}
+                        onChange={() => handleCheckboxChange(qIndex, option)}
+                        disabled={submitting}
                       />
                       {option}
                     </label>
@@ -114,12 +146,12 @@ telefonnummer                  className="form-input"
           <button
             type="submit"
             className="submit-response-button"
-            disabled={submitLoading}
+            disabled={submitting}
           >
-            {submitLoading ? 'Submitting...' : 'Submit Responses'}
+            {submitting ? 'Submitting...' : 'Submit Response'}
           </button>
         </form>
-      </div>
+      </main>
     </div>
   );
 };

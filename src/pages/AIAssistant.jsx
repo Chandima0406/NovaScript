@@ -12,10 +12,6 @@ const AIAssistant = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   };
 
-  useEffect(() => {
-    scrollToBottom();
-  }, [messages]);
-
   // Handle sending a message
   const handleSendMessage = async (e) => {
     e.preventDefault();

@@ -127,7 +127,7 @@ const CreateSurvey = () => {
       } else {
         await createSurvey(survey);
       }
-      navigate('/search');
+      navigate('/researcher-dashboard');
     } catch (err) {
       setError(err.response?.data?.message || 'Failed to save survey');
     } finally {
