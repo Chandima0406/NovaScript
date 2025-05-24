@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { getAllSurveys, getAnsweredSurveys } from '../api';
 import '../styles/SupportSurvey.css';
 
@@ -9,31 +9,40 @@ const SupportSurvey = () => {
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         setLoading(true);
+        setError('');
+        const token = localStorage.getItem('token');
+        if (!token) {
+          navigate('/login');
+          return;
+        }
         const [surveysRes, answeredRes] = await Promise.all([
           getAllSurveys(),
-          getAnsweredSurveys()
+          getAnsweredSurveys(),
         ]);
-
-        // Create a Set of answered survey IDs for efficient lookup
         const answeredIds = new Set(answeredRes.data.map(survey => survey._id));
         setAnsweredSurveys(answeredIds);
-
-        // Filter out answered surveys
         const availableSurveys = surveysRes.data.filter(survey => !answeredIds.has(survey._id));
         setSurveys(availableSurveys);
       } catch (err) {
-        setError('Failed to fetch surveys');
+        console.error('Error fetching surveys:', err);
+        if (err.response?.status === 401) {
+          localStorage.removeItem('token');
+          navigate('/login');
+        } else {
+          setError('Failed to fetch surveys');
+        }
       } finally {
         setLoading(false);
       }
     };
     fetchData();
-  }, []);
+  }, [navigate, location]); // Added location to refresh on navigation
 
   return (
     <div className="support-survey-container">
