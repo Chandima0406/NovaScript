@@ -1,18 +1,73 @@
-# Getting Started with Create React App
+# NovaScript - Research and Survey Platform
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+NovaScript is a full-stack web application that allows researchers to publish research papers, create surveys, and analyze the results. It also enables users to participate in surveys and access research papers.
+
+## Features
+
+- **User Authentication**: Register and login system with JWT authentication
+- **Research Paper Management**: Upload, view, and manage research papers
+- **Survey System**: Create, respond to, and analyze surveys
+- **Dashboard**: User-friendly interface for researchers and participants
+
+## Technology Stack
+
+- **Frontend**: React, Chart.js, React Router
+- **Backend**: Node.js, Express
+- **Database**: MongoDB with Mongoose
+- **File Storage**: GridFS for PDF storage
+- **Authentication**: JWT with bcrypt
+
+## Project Structure
+
+The project follows a modular architecture:
+
+```
+server/
+  ├── config/        # Database configuration
+  ├── controllers/   # API route handlers
+  ├── middlewares/   # Middleware functions
+  ├── models/        # Database schemas
+  ├── routes/        # API routes
+  └── utils/         # Utility functions
+```
+
+## Getting Started
+
+### Prerequisites
+
+- Node.js (v14+)
+- MongoDB database (local or cloud)
+
+### Installation
+
+1. Clone the repository
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
+3. Create a `.env` file in the root directory with the following variables:
+   ```
+   MONGO_URI=your_mongodb_connection_string
+   JWT_SECRET=your_jwt_secret
+   PORT=5000
+   ```
 
 ## Available Scripts
 
 In the project directory, you can run:
 
+### `npm run dev`
+
+Runs both the backend server and frontend development server concurrently.\
+Backend runs on [http://localhost:5000](http://localhost:5000) and frontend on [http://localhost:3000](http://localhost:3000).
+
+### `npm run server`
+
+Runs only the backend server on [http://localhost:5000](http://localhost:5000).
+
 ### `npm start`
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
-
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+Runs only the frontend development server on [http://localhost:3000](http://localhost:3000).
 
 ### `npm test`
 
@@ -26,6 +81,21 @@ It correctly bundles React in production mode and optimizes the build for the be
 
 The build is minified and the filenames include the hashes.\
 Your app is ready to be deployed!
+
+## API Testing
+
+To test the API endpoints, run:
+
+```bash
+node testApi.js
+```
+
+This will perform a series of tests on the API endpoints, including:
+- User registration and authentication
+- Survey creation and retrieval
+- Project listing
+
+Make sure the server is running before executing the test script.
 
 See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
