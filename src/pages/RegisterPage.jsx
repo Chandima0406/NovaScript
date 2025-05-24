@@ -114,7 +114,7 @@ const RegisterPage = () => {
             >
               <option value="" disabled>Select your Role</option>
               <option value="researcher">Researcher</option>
-              <option value="user">User</option>
+              <option value="supervisor">Supervisor</option>
             </select>
           </div>
           <button type="submit" className="register-button">Register</button>
