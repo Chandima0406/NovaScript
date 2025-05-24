@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { publishProject } from '../api';
+import React, { useState, useEffect } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
+import { publishProject, getProjectById, updateProject } from '../api';
 import '../styles/PublishResearch.css';
 
 const PublishResearch = () => {
+  const { projectId } = useParams(); // Get projectId from URL for editing
   const [formData, setFormData] = useState({
     title: '',
     description: '',
@@ -12,7 +13,35 @@ const PublishResearch = () => {
   const [pdfFile, setPdfFile] = useState(null);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+  const [initialLoading, setInitialLoading] = useState(!!projectId); // Only true when editing
   const navigate = useNavigate();
+
+  // Fetch project details if editing
+  useEffect(() => {
+    const fetchProject = async () => {
+      if (!projectId) {
+        setInitialLoading(false);
+        return;
+      }
+      try {
+        setInitialLoading(true);
+        const response = await getProjectById(projectId);
+        const project = response.data;
+        setFormData({
+          title: project.title,
+          description: project.description,
+          role: project.author.role,
+        });
+      } catch (err) {
+        console.error('Error fetching project:', err);
+        setError(err.response?.data?.message || 'Failed to fetch project details');
+        navigate('/researcher-dashboard');
+      } finally {
+        setInitialLoading(false);
+      }
+    };
+    fetchProject();
+  }, [projectId, navigate]);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -24,7 +53,7 @@ const PublishResearch = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (loading) return;
+    if (loading || initialLoading) return;
     setLoading(true);
     setError('');
 
@@ -34,22 +63,50 @@ const PublishResearch = () => {
     data.append('role', formData.role);
     if (pdfFile) {
       data.append('pdf', pdfFile);
+    } else if (!projectId) {
+      setError('PDF file is required for new projects');
+      setLoading(false);
+      return;
     }
 
     try {
-      await publishProject(data);
-      navigate('/search');
+      if (projectId) {
+        // Update existing project
+        await updateProject(projectId, data);
+      } else {
+        // Create new project
+        await publishProject(data);
+      }
+      navigate('/researcher-dashboard'); // Redirect to dashboard after success
     } catch (err) {
-      setError(err.response?.data?.message || 'Failed to publish project');
+      console.error('Error submitting project:', err);
+      if (err.response?.status === 401) {
+        localStorage.removeItem('token');
+        navigate('/login');
+      } else {
+        setError(err.response?.data?.message || 'Failed to save project');
+      }
     } finally {
       setLoading(false);
     }
   };
 
+  if (initialLoading) {
+    return (
+      <div className="publish-research-page">
+        <main className="publish-main">
+          <p>Loading project details...</p>
+        </main>
+      </div>
+    );
+  }
+
   return (
     <div className="publish-research-page">
       <main className="publish-main">
-        <h1 className="publish-title">Publish a Research Project</h1>
+        <h1 className="publish-title">
+          {projectId ? 'Edit Research Project' : 'Publish a Research Project'}
+        </h1>
         {error && <p className="error-message">{error}</p>}
         <form className="publish-form" onSubmit={handleSubmit}>
           <div className="form-group">
@@ -62,7 +119,7 @@ const PublishResearch = () => {
               value={formData.title}
               onChange={handleChange}
               required
-              disabled={loading}
+              disabled={loading || initialLoading}
             />
           </div>
           <div className="form-group">
@@ -74,7 +131,7 @@ const PublishResearch = () => {
               value={formData.description}
               onChange={handleChange}
               required
-              disabled={loading}
+              disabled={loading || initialLoading}
             ></textarea>
           </div>
           <div className="form-group">
@@ -87,25 +144,25 @@ const PublishResearch = () => {
               value={formData.role}
               onChange={handleChange}
               required
-              disabled={loading}
+              disabled={loading || initialLoading}
             />
           </div>
           <div className="form-group">
-            <label>Upload PDF</label>
+            <label>Upload PDF {projectId ? '(Optional)' : ''}</label>
             <input
               type="file"
               accept="application/pdf"
               onChange={handleFileChange}
-              required
-              disabled={loading}
+              required={!projectId} // Required only for new projects
+              disabled={loading || initialLoading}
             />
           </div>
           <button
             type="submit"
             className="publish-button"
-            disabled={loading}
+            disabled={loading || initialLoading}
           >
-            {loading ? 'Publishing...' : 'Submit Request'}
+            {loading ? 'Saving...' : projectId ? 'Update Project' : 'Submit Request'}
           </button>
         </form>
       </main>
