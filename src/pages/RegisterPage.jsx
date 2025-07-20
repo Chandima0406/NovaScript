@@ -10,7 +10,7 @@ const RegisterPage = () => {
     phone: '',
     password: '',
     confirm_password: '',
-    role: ''
+    role: 'researcher' // Automatically set to researcher
   });
   const [error, setError] = useState('');
   const navigate = useNavigate();
@@ -97,27 +97,12 @@ const RegisterPage = () => {
               id="confirm-password"
               name="confirm_password"
               placeholder="Confirm Password"
-              className="form-input"
-              value={formData.confirm_password}
+              className="form-input"              value={formData.confirm_password}
               onChange={handleChange}
               required
             />
           </div>
-          <div className="form-group">
-            <select
-              id="role"
-              name="role"
-              className="form-input"
-              value={formData.role}
-              onChange={handleChange}
-              required
-            >
-              <option value="" disabled>Select your Role</option>
-              <option value="researcher">Researcher</option>
-              <option value="user">User</option>
-            </select>
-          </div>
-          <button type="submit" className="register-button">Register</button>
+          <button type="submit" className="register-button">Register as Researcher</button>
         </form>
         <p className="login-prompt">
           Already Have An Account? <Link to="/login" className="login-link">Log In</Link>
