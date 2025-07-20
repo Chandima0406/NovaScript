@@ -1,38 +1,49 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { login } from '../api';
+import { AuthContext } from '../AuthContext';
+import { login, getUser } from '../api';
 import '../styles/LoginPage.css';
 
 const LoginPage = () => {
   const [formData, setFormData] = useState({
-    email: '',
+    email: localStorage.getItem('email') || '',
     password: '',
-    remember: false
+    remember: false,
   });
   const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
+  const { login: setAuthUser } = useContext(AuthContext);
   const navigate = useNavigate();
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
     setFormData({
       ...formData,
-      [name]: type === 'checkbox' ? checked : value
+      [name]: type === 'checkbox' ? checked : value,
     });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (loading) return;
+    setLoading(true);
     setError('');
 
     try {
       const response = await login({ email: formData.email, password: formData.password });
-      localStorage.setItem('token', response.data.token); // Store JWT
+      localStorage.setItem('token', response.data.token);
       if (formData.remember) {
-        localStorage.setItem('email', formData.email); // Optional: Store email for "Remember Me"
+        localStorage.setItem('email', formData.email);
+      } else {
+        localStorage.removeItem('email');
       }
-      navigate('/search'); // Redirect to home page
+      const userResponse = await getUser();
+      setAuthUser(userResponse.data);
+      navigate('/search');
     } catch (err) {
       setError(err.response?.data?.message || 'Login failed');
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -52,6 +63,7 @@ const LoginPage = () => {
               value={formData.email}
               onChange={handleChange}
               required
+              disabled={loading}
             />
           </div>
           <div className="form-group">
@@ -64,6 +76,7 @@ const LoginPage = () => {
               value={formData.password}
               onChange={handleChange}
               required
+              disabled={loading}
             />
           </div>
           <div className="form-options">
@@ -73,12 +86,15 @@ const LoginPage = () => {
                 name="remember"
                 checked={formData.remember}
                 onChange={handleChange}
+                disabled={loading}
               />
               Remember Me
             </label>
             <Link to="/forgot-password" className="forgot-password">Forgot Password?</Link>
           </div>
-          <button type="submit" className="login-button">Log In</button>
+          <button type="submit" className="login-button" disabled={loading}>
+            {loading ? 'Logging In...' : 'Log In'}
+          </button>
         </form>
         <p className="signup-prompt">
           Don’t Have An Account Yet? <Link to="/register" className="signup-link">Sign Up</Link>
