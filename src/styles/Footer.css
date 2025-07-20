@@ -1,9 +1,12 @@
 /* styles/Footer.css */
 .footer {
+  width: 100%;
   padding: 40px 0 20px;
   border-top: 1px solid #eaeaea;
   background-color: #fff;
   font-family: Arial, sans-serif;
+  bottom: 0;
+  left: 0;
 }
 
 .footer-container {

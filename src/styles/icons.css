@@ -1,0 +1,9 @@
+/* Add this to the existing DashboardNav.css */
+
+/* Icon for the notification menu item */
+.notification-icon::before {
+  content: "\f0f3"; /* Bell icon in Font Awesome */
+  font-family: "Font Awesome 5 Free";
+  font-weight: 900;
+  margin-right: 10px;
+}
