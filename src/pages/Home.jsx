@@ -1,6 +1,11 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import { FaFacebookF, FaInstagram, FaTwitter, FaLinkedinIn } from 'react-icons/fa';
 import '../styles/Home.css';
+
+// Import images to ensure correct paths
+import aiBotImage from '../assets/Ai bot.png';
+import heroBackground from '../assets/hero-bg.jpg';
 
 const Home = () => {
   const navigate = useNavigate();
@@ -9,53 +14,53 @@ const Home = () => {
     {
       icon: "chip",
       title: "AI Powered Research Assistance",
-      description: "Automate proposal writing & get AI driven insights."
+      description: "Get intelligent research guidance and writing support with AI."
     },
     {
       icon: "document",
-      title: "Effortless Project Management",
-      description: "Organize tasks, set milestones & track progress easily."
-    },
-    {
-      icon: "team",
-      title: "Seamless Team Collaboration",
-      description: "Share documents, receive feedback & communicate in real time."
-    },
-    {
-      icon: "money",
-      title: "Advanced Budget Tracking",
-      description: "Monitor research funds with interactive charts & analytics."
+      title: "Comprehensive Project Management",
+      description: "Create, organize and manage research projects with timeline tracking."
     },
     {
       icon: "storage",
-      title: "Secure Document Storage",
-      description: "Store, access & manage research documents safely in the cloud."
+      title: "Research Paper Management",
+      description: "Publish, search and manage research papers with secure PDF storage."
     },
     {
       icon: "monitor",
-      title: "Real Time Progress Monitoring",
-      description: "Gain insights with AI powered dashboards & Gantt charts."
+      title: "Advanced Survey System",
+      description: "Create detailed surveys, collect responses and analyze data effectively."
+    },
+    {
+      icon: "team",
+      title: "User Dashboard & Analytics",
+      description: "Track your research progress with comprehensive dashboard insights."
+    },
+    {
+      icon: "money",
+      title: "Budget Planning Tools",
+      description: "Plan and track research project budgets with estimation tools."
     }
   ];
 
   const testimonials = [
     {
       rating: 5,
-      text: "NovaScript transformed the way I manage research! AI-assisted proposal writing saved me hours, and the task tracking keeps my projects on schedule. I highly recommend it to any researcher looking for efficiency and collaboration!",
+      text: "NovaScript made research management so much easier! The AI assistant helped me with research guidance, and the project management features keep everything organized. Perfect for any researcher!",
       name: "Dr. Samantha Perera",
       title: "Senior Researcher",
       avatar: "https://placekitten.com/60/60"
     },
     {
       rating: 5,
-      text: "Managing research has never been easier! The intuitive dashboard, document storage, and real-time feedback system make teamwork seamless. NovaScript is a must-have for any research professional!",
+      text: "The research paper management and search engine are fantastic! I can easily publish my papers and find relevant research. The survey system is also very comprehensive and easy to use.",
       name: "Mr. John Silva",
       title: "University Researcher",
       avatar: "https://placekitten.com/61/61"
     },
     {
       rating: 5,
-      text: "From proposal creation to budget management, NovaScript simplifies everything! The AI-powered insights and seamless team collaboration make research so much more efficient. A game-changer for academics!",
+      text: "From creating research projects to managing budgets, NovaScript has everything I need. The dashboard gives me great insights into my research progress. Highly recommend for academics!",
       name: "Mrs. Ayesha Fernando",
       title: "PhD Student",
       avatar: "https://placekitten.com/62/62"
@@ -107,9 +112,8 @@ const Home = () => {
   };
 
   return (
-    <div className="home">
-      {/* Hero Section */}
-      <div className="hero">
+    <div className="home">      {/* Hero Section */}
+      <div className="hero" style={{ backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(${heroBackground})` }}>
         <div className="content">
           <div className="steps">
             <div className="step">1</div>
@@ -123,28 +127,26 @@ const Home = () => {
           
           <h1 className="title">TRACK, ANALYZE & SUCCEED!</h1>
           
-          <button className="cta-button" onClick={() => navigate('/register')}>Get Started Now</button>
-          
-          <div className="info-panel">
+          <button className="cta-button" onClick={() => navigate('/search')}>Get Started Now</button>
+            <div className="info-panel">
             <div className="info-header">
               <span>Know More</span>
-              <span>→</span>
+              <span aria-hidden="true">→</span>
             </div>
             <div className="info-content">
               <div className="feature">
                 <div className="feature-title">All in One Place</div>
                 <div className="feature-description">
                   Secure, Organize, and Access Research Anytime!
-                </div>
-                <div className="feature-images">
+                </div>                <div className="feature-images">
                   <div className="feature-image">
-                    <img src="../assets/1.png" alt="Collaboration" />
+                    <FaFacebookF aria-hidden="true" />
                   </div>
                   <div className="feature-image">
-                    <img src="../assets/2.png" alt="Data analysis" />
+                    <FaInstagram aria-hidden="true" />
                   </div>
                   <div className="feature-image">
-                    <img src="../assets/3.png" alt="Research tool" />
+                    <FaTwitter aria-hidden="true" />
                   </div>
                 </div>
               </div>
@@ -154,22 +156,21 @@ const Home = () => {
         
       </div>
 
-      {/* How It Works Section */}
-      <section className="how-it-works">
+      {/* How It Works Section */}      <section className="how-it-works">
         <div className="social-follow">
           <span className="follow-text">Follow</span>
           <div className="social-icons">
-            <a href="#" className="social-icon facebook" aria-label="Facebook">
-              <i className="fab fa-facebook-f"></i>
+            <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" className="social-icon facebook" aria-label="Follow us on Facebook">
+              <FaFacebookF />
             </a>
-            <a href="#" className="social-icon instagram" aria-label="Instagram">
-              <i className="fab fa-instagram"></i>
+            <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="social-icon instagram" aria-label="Follow us on Instagram">
+              <FaInstagram />
             </a>
-            <a href="#" className="social-icon twitter" aria-label="Twitter">
-              <i className="fab fa-twitter"></i>
+            <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" className="social-icon twitter" aria-label="Follow us on Twitter">
+              <FaTwitter />
             </a>
-            <a href="#" className="social-icon linkedin" aria-label="LinkedIn">
-              <i className="fab fa-linkedin-in"></i>
+            <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="social-icon linkedin" aria-label="Follow us on LinkedIn">
+              <FaLinkedinIn />
             </a>
           </div>
         </div>
@@ -214,9 +215,8 @@ const Home = () => {
           <p className="section-subtitle">
             Empowering researchers with AI driven efficiency!
           </p>
-          <div className="why-choose-container">
-            <div className="images-container">
-              <div className="image-robot" style={{ backgroundImage: 'url(../assets/Ai bot.png)' }}></div>
+          <div className="why-choose-container">            <div className="images-container">
+              <div className="image-robot" style={{ backgroundImage: `url(${aiBotImage})` }}></div>
             </div>
             <div className="features-list">
               {features.map((feature, index) => (
@@ -236,27 +236,25 @@ const Home = () => {
       </section>
 
       {/* Testimonials Section */}
-      <div className="testimonials-container">
-        <h1 className="testimonials-heading">What Our Users Say</h1>
+      <div className="testimonials-container">        <h2 className="testimonials-heading">What Our Users Say</h2>
         <p className="testimonials-subheading">
-          See how <a href="#" className="testimonials-link">NovaScript</a> is transforming research management!
+          See how <span className="testimonials-link highlight">NovaScript</span> is transforming research management!
         </p>
         <div className="testimonials-grid">
           {testimonials.map((testimonial, index) => (
-            <div className="testimonial-card" key={index}>
-              <div className="testimonial-content">
-                <div className="testimonial-stars">
+            <div className="testimonial-card" key={index}>              <div className="testimonial-content">
+                <div className="testimonial-stars" aria-label={`${testimonial.rating} out of 5 stars`}>
                   {[...Array(testimonial.rating)].map((_, i) => (
-                    <span key={i} className="star">★</span>
+                    <span key={i} className="star" aria-hidden="true">★</span>
                   ))}
                 </div>
                 <p className="testimonial-text">{testimonial.text}</p>
               </div>
-              <div className="testimonial-footer">
-                <img 
+              <div className="testimonial-footer">                <img 
                   src={testimonial.avatar} 
                   alt={`${testimonial.name}'s avatar`} 
                   className="testimonial-avatar" 
+                  loading="lazy"
                 />
                 <div className="testimonial-info">
                   <h3 className="testimonial-name">{testimonial.name}</h3>
