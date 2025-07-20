@@ -18,11 +18,9 @@ const ContactUs = () => {
       [name]: value
     }));
   };
-
   const handleSubmit = (e) => {
     e.preventDefault();
     // Handle form submission logic here
-    console.log('Form submitted:', formData);
     // Reset form after submission
     setFormData({
       firstName: '',
