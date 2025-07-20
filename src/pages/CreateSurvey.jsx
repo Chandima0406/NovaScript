@@ -1,15 +1,13 @@
-// G:\NovaScript\client\src\pages\CreateSurvey.jsx
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { createSurvey, updateSurvey, getSurveyById } from '../api';
 import '../styles/CreateSurvey.css';
 
 const CreateSurvey = () => {
-  const { surveyId } = useParams();
-  const [survey, setSurvey] = useState({
+  const { surveyId } = useParams();  const [survey, setSurvey] = useState({
     title: '',
     description: '',
-    creator: { name: '', role: '' }, // Changed from role to creator
+    creator: { name: '', role: '' },
     questions: [{ text: '', type: 'text', options: [] }],
   });
   const [error, setError] = useState('');
@@ -30,10 +28,8 @@ const CreateSurvey = () => {
           title: surveyData.title,
           description: surveyData.description,
           creator: surveyData.creator, // Changed from role to creator
-          questions: surveyData.questions,
-        });
+          questions: surveyData.questions,        });
       } catch (err) {
-        console.error('Error fetching survey:', err);
         setError(err.response?.data?.message || 'Failed to fetch survey details');
         navigate('/dashboard');
       } finally {
@@ -127,7 +123,7 @@ const CreateSurvey = () => {
       } else {
         await createSurvey(survey);
       }
-      navigate('/search');
+      navigate('/researcher-dashboard');
     } catch (err) {
       setError(err.response?.data?.message || 'Failed to save survey');
     } finally {
