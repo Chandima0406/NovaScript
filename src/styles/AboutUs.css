@@ -1,0 +1,109 @@
+.about-us-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+  
+  /* Hero Section */
+  .hero-section {
+    text-align: center;
+    margin: 40px 0;
+    padding: 0 20px;
+  }
+  
+  .hero-section h1 {
+    font-size: 3rem;
+    font-weight: 700;
+    color: #000;
+    margin-bottom: 20px;
+  }
+  
+  .mission-statement {
+    font-size: 1.2rem;
+    line-height: 1.6;
+    color: #000;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+  
+  /* Main Content */
+  .main-content {
+    padding: 40px 0;
+  }
+  
+  .content-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 60px;
+  }
+  
+  .text-content {
+    flex: 1;
+  }
+  
+  .text-content h2 {
+    font-size: 2.2rem;
+    font-weight: 700;
+    color: #000;
+    margin-bottom: 30px;
+  }
+  
+  .text-content p {
+    font-size: 1.05rem;
+    line-height: 1.7;
+    color: #000;
+    margin-bottom: 20px;
+  }
+  
+  .image-content {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+  }
+  
+  .about-image {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Responsive styles */
+  @media (max-width: 992px) {
+    .content-wrapper {
+      flex-direction: column-reverse;
+      gap: 40px;
+    }
+    
+    .hero-section h1 {
+      font-size: 2.5rem;
+    }
+    
+    .text-content h2 {
+      font-size: 1.8rem;
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .hero-section {
+      margin: 30px 0;
+    }
+  
+    .hero-section h1 {
+      font-size: 2.2rem;
+    }
+  
+    .mission-statement {
+      font-size: 1.1rem;
+    }
+  
+    .text-content h2 {
+      font-size: 1.6rem;
+    }
+  
+    .text-content p {
+      font-size: 1rem;
+    }
+  }
+  

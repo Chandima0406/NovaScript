@@ -1,0 +1,138 @@
+.contact-us-container {
+  width: 100%;
+  padding: 60px 0;
+  background-color: #fff;
+}
+
+.contact-us-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.contact-us-header {
+  text-align: center;
+  margin-bottom: 50px;
+}
+
+.contact-us-header h1 {
+  font-size: 2.5rem;
+  color: #000;
+  margin-bottom: 20px;
+  font-weight: 700;
+}
+
+.contact-us-header p {
+  font-size: 1rem;
+  color: #333;
+  max-width: 800px;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+
+.contact-us-form-container {
+  display: flex;
+  justify-content: space-between;
+  gap: 40px;
+}
+
+.contact-form {
+  flex: 1;
+  max-width: 600px;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  display: block;
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: #333;
+}
+
+.name-inputs {
+  display: flex;
+  gap: 10px;
+}
+
+.name-inputs input {
+  flex: 1;
+}
+
+input, textarea {
+  width: auto;
+  padding: 12px 15px;
+  border: 1px solid #e1e1e1;
+  border-radius: 25px;
+  font-size: 1rem;
+  transition: border-color 0.3s;
+}
+
+input::placeholder, textarea::placeholder {
+  color: #aaa;
+}
+
+input:focus, textarea:focus {
+  outline: none;
+  border-color: #1976d2;
+}
+
+textarea {
+  resize: vertical;
+  min-height: 120px;
+  border-radius: 15px;
+}
+
+.submit-button {
+  background-color: #1976d2;
+  color: white;
+  border: none;
+  padding: 14px 0;
+  font-size: 1rem;
+  font-weight: 600;
+  border-radius: 25px;
+  cursor: pointer;
+  width: 100%;
+  transition: background-color 0.3s;
+}
+
+.submit-button:hover {
+  background-color: #1565c0;
+}
+
+.contact-image {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.contact-image img {
+  width: 100%;
+  max-width: 500px;
+  height: auto;
+  border-radius: 10px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .contact-us-form-container {
+    flex-direction: column-reverse;
+  }
+  
+  .contact-image {
+    margin-bottom: 30px;
+  }
+  
+  .name-inputs {
+    flex-direction:column;
+    gap: 15px;
+  }
+  
+  .contact-us-header h1 {
+    font-size:2rem;
+  }
+}

@@ -1,0 +1,121 @@
+/* styles/PublishResearch.css */
+.publish-research-page {
+  font-family: 'Arial', sans-serif;
+  min-height: 100vh;
+  background-color: #fff;
+  display: flex;
+  flex-direction: column;
+}
+
+.publish-main {
+  width: 600px;
+  max-width: 600px;
+  margin: 40px auto;
+  text-align: center;
+  flex-grow: 1;
+}
+
+.publish-title {
+  font-size: 28px;
+  font-weight: 700;
+  color: #222;
+  margin-bottom: 30px;
+}
+
+.error-message {
+  color: #e74c3c;
+  font-size: 14px;
+  margin-bottom: 20px;
+}
+
+.publish-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  text-align: left;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group label {
+  font-size: 16px;
+  font-weight: 500;
+  color: #333;
+  margin-bottom: 8px;
+}
+
+.form-input {
+  padding: 12px 16px;
+  font-size: 16px;
+  border: 1px solid #e0e0e0;
+  border-radius: 25px;
+  outline: none;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.form-input:focus {
+  border-color: #2680eb;
+  box-shadow: 0 0 5px rgba(38, 128, 235, 0.2);
+}
+
+.form-input::placeholder {
+  color: #aaa;
+  font-size: 16px;
+}
+
+.textarea {
+  height: 120px;
+  resize: vertical;
+  border-radius: 15px;
+}
+
+.publish-button {
+  background-color: #2680eb;
+  color: white;
+  border: none;
+  border-radius: 25px;
+  padding: 12px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  width: 100%;
+}
+
+.publish-button:hover:not(:disabled) {
+  background-color: #1c7cd6;
+}
+
+.publish-button:disabled {
+  background-color: #a0c4ff;
+  cursor: not-allowed;
+}
+
+/* Responsive Design */
+@media (max-width: 700px) {
+  .publish-main {
+    width: 500px;
+  }
+}
+
+@media (max-width: 550px) {
+  .publish-main {
+    width: 300px;
+  }
+
+  .publish-title {
+    font-size: 24px;
+  }
+
+  .form-input {
+    font-size: 14px;
+  }
+
+  .publish-button {
+    font-size: 14px;
+  }
+}

@@ -1,0 +1,130 @@
+/* styles/SupportSurvey.css */
+.support-survey-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.main-heading {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.main-heading h1 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #333;
+  margin-bottom: 15px;
+}
+
+.main-heading p {
+  font-size: 1.1rem;
+  color: #555;
+  max-width: 900px;
+  margin: 0 auto;
+  line-height: 1.5;
+}
+
+.surveys-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.survey-card {
+  background-color: white;
+  border: 1px solid #e0e0e0;
+  border-radius: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+  padding: 20px;
+  transition: box-shadow 0.3s;
+}
+
+.survey-card:hover {
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.survey-card h3 {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #333;
+  margin: 0 0 10px 0;
+}
+
+.survey-card p {
+  font-size: 0.95rem;
+  color: #555;
+  line-height: 1.5;
+  margin: 0 0 15px 0;
+}
+
+.answer-survey-button {
+  background-color: #2680eb;
+  color: white;
+  border: none;
+  border-radius: 30px;
+  padding: 12px 24px;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.answer-survey-button:hover {
+  background-color: #1a6bc2;
+}
+
+.error-message {
+  color: #e74c3c;
+  font-size: 14px;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.no-surveys-message {
+  text-align: center;
+  padding: 40px 20px;
+  background-color: #f9f9f9;
+  border-radius: 10px;
+  margin-top: 20px;
+}
+
+.no-surveys-message p {
+  font-size: 1.2rem;
+  color: #333;
+  margin: 0 0 10px 0;
+}
+
+.no-surveys-message .sub-text {
+  font-size: 1rem;
+  color: #666;
+}
+
+.support-survey-container > p {
+  font-size: 1rem;
+  color: #555;
+  text-align: center;
+}
+
+@media (max-width: 768px) {
+  .main-heading h1 {
+    font-size: 2rem;
+  }
+
+  .main-heading p {
+    font-size: 1rem;
+  }
+
+  .no-surveys-message {
+    padding: 30px 15px;
+  }
+
+  .no-surveys-message p {
+    font-size: 1.1rem;
+  }
+
+  .no-surveys-message .sub-text {
+    font-size: 0.9rem;
+  }
+}
