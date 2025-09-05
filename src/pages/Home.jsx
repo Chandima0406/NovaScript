@@ -5,7 +5,7 @@ import '../styles/Home.css';
 
 // Import images to ensure correct paths
 import aiBotImage from '../assets/Ai bot.png';
-import heroBackground from '../assets/hero-bg.jpg';
+import heroBackground from '../assets/hero-bg1.jpg';
 
 const Home = () => {
   const navigate = useNavigate();
